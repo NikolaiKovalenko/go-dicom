@@ -25,7 +25,7 @@ replace github.com/grailbio/bigslice => ../bigslice
 
 replace github.com/grailbio/bio => ../bio
 
-replace github.com/grailbio/go-dicom => ../go-dicom
+replace github.com/NikolaiKovalenko/go-dicom => ../go-dicom
 
 replace github.com/grailbio/go-netdicom => ../go-netdicom
 

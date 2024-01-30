@@ -8,9 +8,9 @@ import (
 	"path/filepath"
 	"testing"
 
-	dicom "github.com/grailbio/go-dicom"
-	"github.com/grailbio/go-dicom/dicomtag"
-	"github.com/grailbio/go-dicom/dicomuid"
+	dicom "github.com/NikolaiKovalenko/go-dicom"
+	"github.com/NikolaiKovalenko/go-dicom/dicomtag"
+	"github.com/NikolaiKovalenko/go-dicom/dicomuid"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
