@@ -29,6 +29,7 @@ func CanonicalTransferSyntaxUID(uid string) (string, error) {
 	case dicomuid.ImplicitVRLittleEndian,
 		dicomuid.ExplicitVRLittleEndian,
 		dicomuid.ExplicitVRBigEndian,
+		"1.2.840.10008.1.2.4.90",
 		dicomuid.DeflatedExplicitVRLittleEndian:
 		return uid, nil
 	default:
