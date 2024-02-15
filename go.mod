@@ -1,4 +1,4 @@
-module  github.com/NikolaiKovalenko/go-dicom
+module github.com/NikolaiKovalenko/go-dicom
 
 go 1.19
 
