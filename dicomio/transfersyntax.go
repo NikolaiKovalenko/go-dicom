@@ -26,14 +26,27 @@ var StandardTransferSyntaxes = []string{
 // explicit little endian.
 func CanonicalTransferSyntaxUID(uid string) (string, error) {
 	// defaults are explicit VR, little endian
-	switch uid {
-	case dicomuid.ImplicitVRLittleEndian,
-		dicomuid.ExplicitVRLittleEndian,
-		dicomuid.ExplicitVRBigEndian,
-		"1.2.840.10008.1.2.4.90",
-		dicomuid.DeflatedExplicitVRLittleEndian:
+	//switch uid {
+	//case dicomuid.ImplicitVRLittleEndian,
+	//	dicomuid.ExplicitVRLittleEndian,
+	//	dicomuid.ExplicitVRBigEndian,
+	//	"1.2.840.10008.1.2.4.90",
+	//	dicomuid.DeflatedExplicitVRLittleEndian:
+	//	return uid, nil
+	//default:
+	//	e, err := dicomuid.Lookup(uid)
+	//	if err != nil {
+	//		return "", err
+	//	}
+	//	if e.Type != dicomuid.TypeTransferSyntax {
+	//		return "", fmt.Errorf("dicom.CanonicalTransferSyntaxUID: '%s' is not a transfer syntax (is %s)", uid, e.Type)
+	//	}
+	//	// The default is ExplicitVRLittleEndian
+	//	return dicomuid.ExplicitVRLittleEndian, nil
+	//}
+	if uid != "" {
 		return uid, nil
-	default:
+	} else {
 		e, err := dicomuid.Lookup(uid)
 		if err != nil {
 			return "", err
