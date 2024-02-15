@@ -123,6 +123,8 @@ func WriteElement(e *dicomio.Encoder, elem *Element) {
 			vr = "UN"
 		}
 	}
+
+	// remove VR validation
 	//else {
 	//	if err == nil && entry.VR != vr {
 	//		if dicomtag.GetVRKind(elem.Tag, entry.VR) != dicomtag.GetVRKind(elem.Tag, vr) {
