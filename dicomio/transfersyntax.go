@@ -79,6 +79,7 @@ func ParseTransferSyntaxUID(uid string) (bo binary.ByteOrder, implicit IsImplici
 	case dicomuid.ExplicitVRBigEndian:
 		return binary.BigEndian, ExplicitVR, nil
 	default:
-		panic(fmt.Sprintf("Invalid transfer syntax: %v,  %v", canonical, uid))
+		return binary.LittleEndian, ExplicitVR, nil
+		//panic(fmt.Sprintf("Invalid transfer syntax: %v,  %v", canonical, uid))
 	}
 }
