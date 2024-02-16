@@ -328,8 +328,9 @@ func WriteElement(e *dicomio.Encoder, elem *Element) {
 			for i, value := range elem.Value {
 				substr, ok := value.(string)
 				if !ok {
-					e.SetErrorf("%v: Non-string value found", dicomtag.DebugString(elem.Tag))
-					continue
+					//e.SetErrorf("%v: Non-string value found", dicomtag.DebugString(elem.Tag))
+					//continue
+					substr = fmt.Sprintf("%v", value)
 				}
 				if i > 0 {
 					s += "\\"
