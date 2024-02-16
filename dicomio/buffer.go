@@ -16,7 +16,7 @@ import (
 // NativeByteOrder is the byte order of this machine.
 //
 // TODO(saito) Auto-detect the native byte order. For now, to assume that every
-//machine in the world is little endian is not too horrible.
+// machine in the world is little endian is not too horrible.
 var NativeByteOrder = binary.LittleEndian
 
 type transferSyntaxStackEntry struct {
