@@ -93,12 +93,12 @@ func ReadDataSet(in io.Reader, options ReadOptions) (*DataSet, error) {
 	file := &DataSet{Elements: metaElems}
 
 	// Change the transfer syntax for the rest of the file.
-	endian, implicit, err := getTransferSyntax(file)
-	if err != nil {
-		return nil, err
-	}
-	buffer.PushTransferSyntax(endian, implicit)
-	defer buffer.PopTransferSyntax()
+	//endian, implicit, err := getTransferSyntax(file)
+	//if err != nil {
+	//	return nil, err
+	//}
+	//buffer.PushTransferSyntax(endian, implicit)
+	//defer buffer.PopTransferSyntax()
 
 	// Read the list of elements.
 	for !buffer.EOF() {
