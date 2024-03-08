@@ -596,6 +596,19 @@ func ReadElement(d *dicomio.Decoder, options ReadOptions) *Element {
 		//	d.SetErrorf("dicom.ReadElement: Undefined length disallowed for VR=%s, tag %s", vr, dicomtag.DebugString(tag))
 		//	return nil
 		//}
+		if vl == undefinedLength {
+			for {
+				// Makes sure to return all sub elements even if the tag is not in the return tags list of options or is greater than the Stop At Tag
+				subelem := ReadElement(d, ReadOptions{})
+				if d.Error() != nil {
+					break
+				}
+				if subelem.Tag == dicomtag.ItemDelimitationItem {
+					break
+				}
+				data = append(data, subelem)
+			}
+		}
 		d.PushLimit(int64(vl))
 		defer d.PopLimit()
 		if vr == "DA" {
@@ -717,10 +730,10 @@ func readExplicit(buffer *dicomio.Decoder, tag dicomtag.Tag) (string, uint32) {
 			vl = undefinedLength
 		}
 	}
-	//if vl != undefinedLength && vl%2 != 0 {
-	//	buffer.SetErrorf("Encountered odd length (vl=%v) when reading explicit VR %v for tag %s", vl, vr, dicomtag.DebugString(tag))
-	//	vl = 0
-	//}
+	if vl != undefinedLength && vl%2 != 0 {
+		buffer.SetErrorf("Encountered odd length (vl=%v) when reading explicit VR %v for tag %s", vl, vr, dicomtag.DebugString(tag))
+		vl = 0
+	}
 	return vr, vl
 }
 
