@@ -592,10 +592,10 @@ func ReadElement(d *dicomio.Decoder, options ReadOptions) *Element {
 			d.PopLimit()
 		}
 	} else { // List of scalar
-		if vl == undefinedLength {
-			d.SetErrorf("dicom.ReadElement: Undefined length disallowed for VR=%s, tag %s", vr, dicomtag.DebugString(tag))
-			return nil
-		}
+		//if vl == undefinedLength {
+		//	d.SetErrorf("dicom.ReadElement: Undefined length disallowed for VR=%s, tag %s", vr, dicomtag.DebugString(tag))
+		//	return nil
+		//}
 		d.PushLimit(int64(vl))
 		defer d.PopLimit()
 		if vr == "DA" {
