@@ -15,6 +15,8 @@ import (
 
 const itemSeqGroup = 0xFFFE
 
+var otCustomTag = dicomtag.Tag{Group: 0xFF00, Element: 0xFFFF}
+
 // Element represents a single DICOM element. Use NewElement() to create a
 // element denovo. Avoid creating a struct manually, because setting the VR
 // field is a bit tricky.
@@ -444,6 +446,10 @@ func ReadElement(d *dicomio.Decoder, options ReadOptions) *Element {
 		return endOfDataElement
 	}
 
+	if tag == otCustomTag {
+		return endOfDataElement
+	}
+
 	// Return nil if the tag is greater than the StopAtTag if a StopAtTag is given
 	if options.StopAtTag != nil && tag.Group >= options.StopAtTag.Group && tag.Element >= options.StopAtTag.Element {
 		return endOfDataElement
@@ -592,10 +598,10 @@ func ReadElement(d *dicomio.Decoder, options ReadOptions) *Element {
 			d.PopLimit()
 		}
 	} else { // List of scalar
-		//if vl == undefinedLength {
-		//	d.SetErrorf("dicom.ReadElement: Undefined length disallowed for VR=%s, tag %s", vr, dicomtag.DebugString(tag))
-		//	return nil
-		//}
+		if vl == undefinedLength {
+			d.SetErrorf("dicom.ReadElement: Undefined length disallowed for VR=%s, tag %s", vr, dicomtag.DebugString(tag))
+			return nil
+		}
 		if vl == undefinedLength {
 			for {
 				// Makes sure to return all sub elements even if the tag is not in the return tags list of options or is greater than the Stop At Tag
@@ -701,10 +707,10 @@ func readImplicit(buffer *dicomio.Decoder, tag dicomtag.Tag) (string, uint32) {
 	}
 
 	vl := buffer.ReadUInt32()
-	//if vl != undefinedLength && vl%2 != 0 {
-	//	buffer.SetErrorf("Encountered odd length (vl=%v) when reading implicit VR '%v' for tag %s", vl, vr, dicomtag.DebugString(tag))
-	//	vl = 0
-	//}
+	if vl != undefinedLength && vl%2 != 0 {
+		//	buffer.SetErrorf("Encountered odd length (vl=%v) when reading implicit VR '%v' for tag %s", vl, vr, dicomtag.DebugString(tag))
+		vl = 0
+	}
 	return vr, vl
 }
 
@@ -731,7 +737,7 @@ func readExplicit(buffer *dicomio.Decoder, tag dicomtag.Tag) (string, uint32) {
 		}
 	}
 	if vl != undefinedLength && vl%2 != 0 {
-		buffer.SetErrorf("Encountered odd length (vl=%v) when reading explicit VR %v for tag %s", vl, vr, dicomtag.DebugString(tag))
+		//buffer.SetErrorf("Encountered odd length (vl=%v) when reading explicit VR %v for tag %s", vl, vr, dicomtag.DebugString(tag))
 		vl = 0
 	}
 	return vr, vl
