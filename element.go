@@ -15,7 +15,8 @@ import (
 
 const itemSeqGroup = 0xFFFE
 
-var otCustomTag = dicomtag.Tag{Group: 0xFF00, Element: 0xFFFF}
+var otCustomTag1 = dicomtag.Tag{Group: 0xFF00, Element: 0xFFFF}
+var otCustomTag2 = dicomtag.Tag{Group: 0x0000, Element: 0x2E2E}
 
 // Element represents a single DICOM element. Use NewElement() to create a
 // element denovo. Avoid creating a struct manually, because setting the VR
@@ -471,7 +472,7 @@ func ReadElement(d *dicomio.Decoder, options ReadOptions) *Element {
 		VR:              vr,
 		UndefinedLength: (vl == undefinedLength),
 	}
-	if (vr == "UN" && vl == undefinedLength) || tag == otCustomTag {
+	if (vr == "UN" && vl == undefinedLength) || tag == otCustomTag1 || tag == otCustomTag2 {
 		// This combination appears in some file, but it's unclear what
 		// to do. The standard, as always, is unclear. The best guess is
 		// in PS3.5, 6.2.2, where it states that the combination of
