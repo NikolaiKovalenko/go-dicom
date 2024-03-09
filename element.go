@@ -446,10 +446,6 @@ func ReadElement(d *dicomio.Decoder, options ReadOptions) *Element {
 		return endOfDataElement
 	}
 
-	if tag == otCustomTag {
-		return endOfDataElement
-	}
-
 	// Return nil if the tag is greater than the StopAtTag if a StopAtTag is given
 	if options.StopAtTag != nil && tag.Group >= options.StopAtTag.Group && tag.Element >= options.StopAtTag.Element {
 		return endOfDataElement
@@ -475,7 +471,7 @@ func ReadElement(d *dicomio.Decoder, options ReadOptions) *Element {
 		VR:              vr,
 		UndefinedLength: (vl == undefinedLength),
 	}
-	if vr == "UN" && vl == undefinedLength {
+	if (vr == "UN" && vl == undefinedLength) || tag == otCustomTag {
 		// This combination appears in some file, but it's unclear what
 		// to do. The standard, as always, is unclear. The best guess is
 		// in PS3.5, 6.2.2, where it states that the combination of
