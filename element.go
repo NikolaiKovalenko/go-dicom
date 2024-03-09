@@ -472,7 +472,7 @@ func ReadElement(d *dicomio.Decoder, options ReadOptions) *Element {
 		VR:              vr,
 		UndefinedLength: (vl == undefinedLength),
 	}
-	if (vr == "UN" && vl == undefinedLength) || tag == otCustomTag1 || tag == otCustomTag2 {
+	if vr == "UN" && vl == undefinedLength {
 		// This combination appears in some file, but it's unclear what
 		// to do. The standard, as always, is unclear. The best guess is
 		// in PS3.5, 6.2.2, where it states that the combination of
